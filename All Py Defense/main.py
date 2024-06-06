@@ -85,11 +85,11 @@ def draw_text(text, font, text_col, x, y):
 
 def display_data():
   #draw panel
-  pg.draw.rect(screen, 'maroon', (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, c.SCREEN_HEIGHT), 0)
+  pg.draw.rect(screen, 'dodgerblue', (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, c.SCREEN_HEIGHT), 0)
   pg.draw.rect(screen, 'grey0', (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, 400), 2)
   screen.blit(logo_image, (c.SCREEN_WIDTH, 400))
   #display data
-  draw_text('LEVEL: ' + str(world.level), text_font, 'grey100',c.SCREEN_WIDTH, 10)
+  draw_text('LEVEL: ' + str(world.level), text_font, 'grey100',c.SCREEN_WIDTH + 5, 10)
   screen.blit(heart_image, (c.SCREEN_WIDTH + 10, 35))
   draw_text(str(world.health), text_font, 'grey100',c.SCREEN_WIDTH + 50, 40)
   screen.blit(coin_image, (c.SCREEN_WIDTH+10, 65))
@@ -259,7 +259,7 @@ while run:
     #draw buttons
     #button for placing turret
     #for turrent button show price and draw
-    draw_text(str(c.BUY_COST), text_font, 'grey100', c.SCREEN_WIDTH + 215, 135)
+    draw_text(str(c.BUY_COST), text_font, 'grey100', c.SCREEN_WIDTH + 205, 135)
     screen.blit(coin_image, (c.SCREEN_WIDTH + 260, 130))
     if turret_button.draw(screen):
       placing_turrets = True
@@ -287,8 +287,8 @@ while run:
 
     # button for placing cannon
     # for cannon button show price and draw
-    draw_text(str(c.CANNON_BUY_COST), text_font, 'grey100', c.SCREEN_WIDTH + 215, 235)
-    screen.blit(coin_image, (c.SCREEN_WIDTH + 260, 230))
+    draw_text(str(c.CANNON_BUY_COST), text_font, 'grey100', c.SCREEN_WIDTH + 205, 225)
+    screen.blit(coin_image, (c.SCREEN_WIDTH + 260, 220))
     if cannon_button.draw(screen):
       placing_cannons = True
     # if placing cannons show cancel button
@@ -350,6 +350,7 @@ while run:
         selected_turret = None
         selected_cannon = None
         clear_selection()
+        clear_cannon_selection()
         if placing_turrets == True:
           #CHECK IF YOU HAVE ENOUGH MOENY
           if world.money >= c.BUY_COST:
