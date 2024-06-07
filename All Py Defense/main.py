@@ -51,7 +51,8 @@ enemy_images = {
   'weak': pg.image.load('assets/images/enemies/enemy_1.png').convert_alpha(),
   'medium': pg.image.load('assets/images/enemies/enemy_2.png').convert_alpha(),
   'strong': pg.image.load('assets/images/enemies/enemy_3.png').convert_alpha(),
-  'elite': pg.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
+  'elite': pg.image.load('assets/images/enemies/enemy_4.png').convert_alpha(),
+  'moab': pg.image.load('assets/images/enemies/enemy_5.png').convert_alpha()
 }
 #buttons
 buy_turret_image = pg.image.load('assets/images/buttons/buy_turret.png').convert_alpha()
@@ -86,8 +87,7 @@ def draw_text(text, font, text_col, x, y):
 def display_data():
   #draw panel
   pg.draw.rect(screen, 'dodgerblue', (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, c.SCREEN_HEIGHT), 0)
-  pg.draw.rect(screen, 'grey0', (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, 400), 2)
-  screen.blit(logo_image, (c.SCREEN_WIDTH, 400))
+  pg.draw.rect(screen, 'grey0', (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, c.SCREEN_HEIGHT), 2)
   #display data
   draw_text('LEVEL: ' + str(world.level), text_font, 'grey100',c.SCREEN_WIDTH + 5, 10)
   screen.blit(heart_image, (c.SCREEN_WIDTH + 10, 35))
@@ -163,6 +163,7 @@ world = World(world_data, map_image)
 world.process_data()
 world.process_enemies()
 
+
 #create groups
 enemy_group = pg.sprite.Group()
 turret_group = pg.sprite.Group()
@@ -170,11 +171,11 @@ cannon_group = pg.sprite.Group()
 
 #create buttons
 turret_button = Button(c.SCREEN_WIDTH + 30, 120, buy_turret_image, True)
-cancel_button = Button(c.SCREEN_WIDTH + 50, 275, cancel_image, True)
+cancel_button = Button(c.SCREEN_WIDTH + 50, 400, cancel_image, True)
 upgrade_button = Button(c.SCREEN_WIDTH + 5, 180, upgrade_turret, True)
-cannon_button = Button(c.SCREEN_WIDTH + 30, 210, buy_cannon_image, True)
-upgrade_cannon_button = Button(c.SCREEN_WIDTH + 5, 270, upgrade_cannon, True)
-begin_button = Button(c.SCREEN_WIDTH + 60, 340, begin_image, True)
+cannon_button = Button(c.SCREEN_WIDTH + 30, 250, buy_cannon_image, True)
+upgrade_cannon_button = Button(c.SCREEN_WIDTH + 5, 310, upgrade_cannon, True)
+begin_button = Button(c.SCREEN_WIDTH + 60, 450, begin_image, True)
 restart_button = Button(310, 300, restart_image, True)
 fast_foward_button = Button(c.SCREEN_WIDTH + 50, 340, fast_foward_image, False)
 
@@ -242,7 +243,7 @@ while run:
       if pg.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
         if world.spawned_enemies < len(world.enemy_list):
           enemy_type = world.enemy_list[world.spawned_enemies]
-          enemy = Enemy(enemy_type, world.waypoints, enemy_images)
+          enemy = Enemy(enemy_type, world.waypoints, enemy_images, world)
           enemy_group.add(enemy)
           world.spawned_enemies += 1
           last_enemy_spawn = pg.time.get_ticks()
@@ -287,8 +288,8 @@ while run:
 
     # button for placing cannon
     # for cannon button show price and draw
-    draw_text(str(c.CANNON_BUY_COST), text_font, 'grey100', c.SCREEN_WIDTH + 205, 225)
-    screen.blit(coin_image, (c.SCREEN_WIDTH + 260, 220))
+    draw_text(str(c.CANNON_BUY_COST), text_font, 'grey100', c.SCREEN_WIDTH + 205, 265)
+    screen.blit(coin_image, (c.SCREEN_WIDTH + 260, 260))
     if cannon_button.draw(screen):
       placing_cannons = True
     # if placing cannons show cancel button
@@ -306,8 +307,8 @@ while run:
     if selected_cannon:
       # If a cannon can be upgraded show upgrade
       if selected_cannon.upgrade_level < c.CANNON_LEVELS:
-        draw_text(str(c.CANNON_UPGRADE_COST), text_font, 'grey100', c.SCREEN_WIDTH + 215, 295)
-        screen.blit(coin_image, (c.SCREEN_WIDTH + 260, 290))
+        draw_text(str(c.CANNON_UPGRADE_COST), text_font, 'grey100', c.SCREEN_WIDTH + 210, 325)
+        screen.blit(coin_image, (c.SCREEN_WIDTH + 260, 320))
         if upgrade_cannon_button.draw(screen):
           if world.money >= c.CANNON_UPGRADE_COST:
             selected_cannon.upgrade()

@@ -1,11 +1,13 @@
 import pygame as pg
 from pygame.math import Vector2
 from enemy_data import ENEMY_DATA
+from enemy_data import ENEMY_SPAWN_DATA
+from world import World
 import constants as c
 import math
 
 class Enemy(pg.sprite.Sprite):
-    def __init__(self, enemy_type, waypoints, images):
+    def __init__(self, enemy_type, waypoints, images, world):
         pg.sprite.Sprite.__init__(self)
         self.waypoints = waypoints
         self.pos = Vector2(self.waypoints[0])
@@ -17,6 +19,7 @@ class Enemy(pg.sprite.Sprite):
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+        self.world = world
 
     def update(self, world):
         self.move(world)
@@ -50,9 +53,10 @@ class Enemy(pg.sprite.Sprite):
         #use distance to calc angle
         self.angle = math.degrees(math.atan2(-dist[1], dist[0]))
         #rotate image and update angle
-
-        #self.image = pg.transform.rotate(self.original_image, self.angle)
-        self.image = self.original_image
+        if self.world.level == 16 or 17:
+            self.image = pg.transform.rotate(self.original_image, self.angle)
+        else:
+            self.image = self.original_image
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
 
