@@ -53,10 +53,10 @@ class Enemy(pg.sprite.Sprite):
         #use distance to calc angle
         self.angle = math.degrees(math.atan2(-dist[1], dist[0]))
         #rotate image and update angle
-        if self.world.level == 16 or 17:
-            self.image = pg.transform.rotate(self.original_image, self.angle)
-        else:
+        if self.world.level == 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10 or 11 or 12 or 13 or 14 or 15:
             self.image = self.original_image
+        else:
+            self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
 
